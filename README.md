@@ -1,6 +1,6 @@
 # neon-database-per-tenant-drizzle
 
-The steps outlined below have been covered in more detail on the Neon blog: [post title tbd](https://neon.tech/blog)
+The steps outlined below have been covered in more detail on the Neon blog: [Migrating schemas across many Neon projects using DrizzleORM](https://neon.tech/blog/migrating-schemas).
 
 ## Create a new Neon Database
 
@@ -12,7 +12,7 @@ npm run create -- --name="ACME Corp"
 
 ## Generate migrations
 
-Creates DrizzleORM config, migrations directories, updates GitHub Repository secrets with Neon connection strings and updates GitHub Actions workflow file.
+Creates DrizzleORM config, migration directories, updates GitHub Repository secrets with Neon connection strings and updates GitHub Actions workflow file.
 
 ```
 npm run generate
@@ -20,7 +20,7 @@ npm run generate
 
 ## Run migrations
 
-Migrations are run from a GitHub Action when a PR is closed and merged is true. Environment variables are dynamically added to the GitHub Repository secrets and updated in the workflow file.
+Migrations are run from a GitHub Action when a PR is closed and merged is `true`. Environment variables are dynamically added to the GitHub Repository secrets and added in the workflow file under the `env` section.
 
 ```
 name: Migrate changes
@@ -32,10 +32,12 @@ on:
       - main
 
 env:
-  ACME_CORP_DATABASE_URL: ${{ secrets.ACME_CORP_DATABASE_URL }}
+  ...
 
 jobs:
   migrate:
     runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true
+
+    ...
 ```
